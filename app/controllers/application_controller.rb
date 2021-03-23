@@ -29,19 +29,6 @@ class ApplicationController < ActionController::API
             @current_organization_id.present?
         end
 
-        def process_token
-            if request.headers['Authorization'].present?
-                begin
-                    jwt_payload = JWT.decode(request.headers['Authorization'].split(' ')[0], Rails.application.secrets.secret_key_base).first
-                    @current_user_id = jwt_payload['id']
-                rescue Exception => e 
-                    render json: { error: e.message }
-                end
-            else
-                render json:{ error: 'Token is Empty' }
-            end
-        end
-
         def authenticate_user!(opthions = {})
             head :unauthorized unless signed_in?
         end
