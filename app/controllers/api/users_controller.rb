@@ -9,6 +9,15 @@ class Api::V1::UsersController < ApplicationController
         render json: @users
     end
 
+    def tasks
+        @tasks = @user.tasks
+        render json: @tasks
+    end
+
+    def projects
+        @projects = user.projects
+        render json: @projects
+    end
 
     def update
         @users = User.find_by(params[:id])
@@ -33,6 +42,6 @@ class Api::V1::UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:name, :password, :email, :organization_id, :contact)
+        params.require(:user).permit(:name, :organization_id, :contact)
     end
 end

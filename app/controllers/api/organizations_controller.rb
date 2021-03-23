@@ -19,6 +19,25 @@ class Api::V1::OrganizationsController < ApplicationController
         end
     end
 
+    def users
+        @users = current_organization.users.where("activate=true")
+        render json: @users
+        @unactive = current_organization.users.where("activate=false")
+        render json: @unactive
+    end
+
+    def tasks
+        if params[:from] = 'project'
+            @tasks = project
+            render json: @tasks
+        end
+    end
+
+    def projects
+        @projects = current_organization.projects
+        render json: @projects
+    end
+
     def destroy
         @organizations = Organization.find_by(params[:id])
         if @organizations
@@ -29,9 +48,11 @@ class Api::V1::OrganizationsController < ApplicationController
         end
     end
 
+
+
     private
 
     def user_params
-        params.require(:organization).permit(:name, :password, :contact, :email)
+        params.require(:organization).permit(:name, :contact)
     end
 end

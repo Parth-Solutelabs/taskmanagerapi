@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::API
     respond_to :json
-    before_action :process_token
-    serialization_scope :view_context
-    
+    before_action :process_token    
     private
         def process_token
             if request.headers['Authorization'].present?
@@ -13,9 +11,10 @@ class ApplicationController < ActionController::API
                     render json: { error: e.message }
                 end
             else
-                render json:{ error: 'Token is Empty' }
+                render json:{ error: 'Token is Empty' } 
             end
         end
+        
 
         def authenticate_organization!(opthions = {})
             head :unauthorized unless signed_in?
