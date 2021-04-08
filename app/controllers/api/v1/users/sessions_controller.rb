@@ -9,7 +9,7 @@ class Api::V1::Users::SessionsController < Devise::SessionsController
       token = user.generate_jwt
       render json: { Token: token }
     else
-      render json: { errors: { 'email or password' => ['is invalid'] } }
+      render json: {errors: I18n.t('users.sessions.create.danger')}
     end
   end
 

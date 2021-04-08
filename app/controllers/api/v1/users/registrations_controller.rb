@@ -18,18 +18,18 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
   def update
     user = User.find_by_id(params[:id])
     if user.update(account_update_params)
-      render json: { data: user, message: 'user updated.'}, status: 200
+      render json: { data: user, message: I18n.t('users.registrations.update.success') }, status: 200
     else
-      render json: { error: 'unable to update user' }, status: 400
+      render json: { error: user.errors.full_messages }, status: 400
     end
   end
 
   def destroy
     user = User.find_by_id(params[:id])
     if user.destroy
-      render json: {message: 'User deleted'}, status: 200
+      render json: { message: I18n.t('users.registrations.destroy.success') }, status: 200
     else
-      render error: { error: 'unable to delete'}, status: 400
+      render json: { error: I18n.t('users.registrations.destroy.danger') }, status: 400
     end
   end
 

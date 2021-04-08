@@ -8,8 +8,9 @@ class Api::V1::Organizations::SessionsController < Devise::SessionsController
     if organization && organization.valid_password?(sign_in_params[:password])
       token = organization.generate_jwt
       render json: { Token: token }
+  
     else
-      render json: { errors: { 'email or password' => ['is invalid'] } }
+      render json: { errors: I18n.t('organizations.sessions.create.danger') }
     end
   end
 

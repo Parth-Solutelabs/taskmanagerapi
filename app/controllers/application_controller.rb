@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
     respond_to :json
-    before_action :process_token    
+    before_action :process_token
+    serialization_scope :view_context
+    require 'pry'
     private
         def process_token
             if request.headers['Authorization'].present?
@@ -17,26 +19,26 @@ class ApplicationController < ActionController::API
         
 
         def authenticate_organization!(opthions = {})
-            head :unauthorized unless signed_in?
+            head :unauthorized unless org_signed_in?
         end
 
         def current_organization
             @current_organization ||= super || Organization.find(@current_organization_id)
         end
 
-        def signed_in?
+        def org_signed_in?
             @current_organization_id.present?
         end
 
         def authenticate_user!(opthions = {})
-            head :unauthorized unless signed_in?
+            head :unauthorized unless user_signed_in?    
         end
 
         def current_user
             @current_user ||= super || User.find(@current_user_id)
         end
 
-        def signed_in?
+        def user_signed_in?
             @current_user_id.present?
         end
 

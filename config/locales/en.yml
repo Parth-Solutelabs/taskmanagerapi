@@ -30,4 +30,55 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+users:
+  show:
+    danger: "Unable to find user"
+  sessions:
+    create:
+      danger: "Invalid email or password"
+  registrations:
+    update:
+      success: "User update successfully" 
+    destroy:
+      success: "User deleted successfully"
+      danger: "Unable to delete user"
+      
+organizations:
+  show:
+    danger: "Unable to find organization"
+  sessions:
+    create:
+      danger: "Invalid email or password"
+  registrations:
+    update:
+      success: "organization update successfully" 
+    destroy:
+      success: "organization deleted successfully"
+      danger: "Unable to delete organization"  
+      
+project_user:
+  show:
+    danger: "Unable to find organization"
+  sessions:
+    create:
+      danger: "Invalid email or password"
+  registrations:
+    update:
+      success: "organization update successfully" 
+    destroy:
+      success: "organization deleted successfully"
+      danger: "Unable to delete organization"  
+      
+    callbacks:
+    set_project_user: "Unable to find project user"
+    
+task:
+    update:
+      success: "task update successfully" 
+      danger: "Unable to update task"
+    destroy:
+      success: "task deleted successfully"
+      danger: "Unable to delete task"
+    callbacks:
+      set_task: "Unable to find task"
+

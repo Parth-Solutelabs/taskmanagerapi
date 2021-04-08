@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :tasks, module: 'api/v1'
       devise_for :users, controllers: {registrations: 'api/v1/users/registrations', sessions: 'api/v1/users/sessions' }
       devise_for :organizations, controllers: {registrations: 'api/v1/organizations/registrations', sessions: 'api/v1/organizations/sessions' }      
-      
+      resource :users, module: 'api/v1' 
       
     end
   end

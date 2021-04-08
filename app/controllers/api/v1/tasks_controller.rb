@@ -9,16 +9,17 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   # GET /tasks/1.json
-  def show
+  def show                                            
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    projusers = ProjectsUser.find(params[:task][:project_users_id])
+    @task = projuser.tasks.build(task_params)
 
     if @task.save
-      render :show, status: :created, location: @task
+      render json: @task , status: :created, location: @task
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -27,8 +28,9 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+    @task = Task.find_by(id: params[:id])
     if @task.update(task_params)
-      render :show, status: :ok, location: @task
+      render json: { message: I18n.t('task.update.success') }, status: 200
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -38,13 +40,17 @@ class TasksController < ApplicationController
   # DELETE /tasks/1.json
   def destroy
     @task.destroy
+    render json: { message: I18n.t('task.destroy.success') }, status: 200
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
-    end
+      @task = Task.find_by(id: params[:id])
+      unless @task
+        render json: { error: I18n.t('task.callbacks.set_task') }, status: 400
+      end 
+    end  
 
     # Only allow a list of trusted parameters through.
     def task_params

@@ -7,7 +7,7 @@ class Organization < ApplicationRecord
   validates :name, presence: true
   validates :contact, length: {is: 10}, numericality: {only_integer: true}
   
-  has_many :projects, dependent: :destroy
+  has_many :projects , dependent: :destroy
   has_many :users, dependent: :destroy
 
   def generate_jwt

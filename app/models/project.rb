@@ -6,6 +6,7 @@ class Project < ApplicationRecord
   validates :organization_id, presence: true
 
   has_many :project_users, dependent: :destroy
-  has_many :users, through: :projects_users, dependent: :destroy
-  has_many :tasks, through: :projects_users
+  has_many :users, through: :project_users, dependent: :destroy
+  has_many :tasks, through: :project_users
+  
 end

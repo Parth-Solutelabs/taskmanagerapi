@@ -5,8 +5,12 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show
-        @users = User.find_by(params[:id])
-        render json: @users
+        @user = User.find_by_id(params[:id])
+        if @user
+            render json: @user, status: 200
+        else
+            render { error: I18n.t('users.show.danger') }, status: 400
+        end
     end
 
     def tasks
@@ -17,26 +21,6 @@ class Api::V1::UsersController < ApplicationController
     def projects
         @projects = user.projects
         render json: @projects
-    end
-
-    def update
-        @users = User.find_by(params[:id])
-        if @users
-            @users.update(user_params)
-            render json: { message: 'user updated.'}, status: 200
-        else
-            render error: { error: 'unable to update user' }, status: 400
-        end
-    end
-
-    def destroy
-        @users = User.find_by(params[:id])
-        if @users
-            @user.destroy
-            render json: {message: 'User deleted'}, status: 200
-        else
-            render error: { error: 'unable to delete'}, status: 400
-        end
     end
 
     private

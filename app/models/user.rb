@@ -8,8 +8,8 @@ class User < ApplicationRecord
 
   belongs_to :organization
 
-  has_many :projects, through: :projects_users, dependent: :destroy
   has_many :projects_users, dependent: :destroy
+  has_many :projects, through: :projects_users, dependent: :destroy
   has_many :tasks, through: :projects_users
 
   validates :name, presence: true, on: :update
